@@ -198,39 +198,40 @@ paymentOptions.addEventListener('change', (e) => {
 inidividual elements that require it. Will show the error messages if 
 validation fails. Stored the validations in their own functions */
 registerButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  validateName();
-  validateEmail();
-  validateActivities();
+  validateName(e);
+  validateEmail(e);
+  validateActivities(e);
   let paymentMethod = document.getElementById('payment').value;
   if(paymentMethod === 'credit card') {
-    validateCreditCard();
+    validateCreditCard(e);
   }
 })
 
-function validateName() {
+function validateName(event) {
   let name = document.getElementById('name');
   if(!name.value.trim()) {
     document.getElementById('name-error').classList.toggle('hide');
-    name.classList.add('error-border')
+    name.classList.add('error-border');
+    event.preventDefault();
   } else {
     document.getElementById('name-error').classList.add('hide');
-    name.classList.remove('error-border')
+    name.classList.remove('error-border');
   }
 }
 
-function validateEmail() {
+function validateEmail(event) {
   let email = document.getElementById('mail');
   if(!/^.+@.+\..+$/.test(email.value)) {
     document.getElementById('email-error').classList.remove('hide');
-    email.classList.add('error-border')
+    email.classList.add('error-border');
+    event.preventDefault();
   } else {
     document.getElementById('email-error').classList.add('hide');
-    email.classList.remove('error-border')
+    email.classList.remove('error-border');
   }
 }
 
-function validateActivities() {
+function validateActivities(event) {
   let activitiesCount = 0;
   let checkedInputs = activities.getElementsByTagName('input');
   for(let i = 0; i < checkedInputs.length; i++) {
@@ -241,19 +242,21 @@ function validateActivities() {
   if(activitiesCount === 0) {
     document.getElementById('activities-error').classList.toggle('hide');
     activities.classList.add('error-border');
+    event.preventDefault();
   } else {
     document.getElementById('activities-error').classList.add('hide');
     activities.classList.remove('error-border');
   }
 }
 
-function validateCreditCard() {
+function validateCreditCard(event) {
   let cardNumber = document.getElementById('cc-num');
   let zipCode = document.getElementById('zip');
   let cvv = document.getElementById('cvv');
   if(!/^[0-9]{13,16}$/.test(cardNumber.value)) {
     document.getElementById('cardNumber-error').classList.remove('hide');
     cardNumber.classList.add('error-border');
+    event.preventDefault();
   } else {
     document.getElementById('cardNumber-error').classList.add('hide');
     cardNumber.classList.remove('error-border');
@@ -261,6 +264,7 @@ function validateCreditCard() {
   if(!/^[0-9]{5}$/.test(zipCode.value)) {
     document.getElementById('zipCode-error').classList.remove('hide');
     zipCode.classList.add('error-border');
+    event.preventDefault();
   } else {
     document.getElementById('zipCode-error').classList.add('hide');
     zipCode.classList.remove('error-border');
@@ -268,6 +272,7 @@ function validateCreditCard() {
   if(!/^[0-9]{3}$/.test(cvv.value)) {
     document.getElementById('cvv-error').classList.remove('hide');
     cvv.classList.add('error-border');
+    event.preventDefault();
   } else {
     document.getElementById('cvv-error').classList.add('hide');
     cvv.classList.remove('error-border');
